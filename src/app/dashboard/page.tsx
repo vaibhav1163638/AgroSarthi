@@ -399,8 +399,32 @@ response:`, locationResult);
                 {language === 'hi' ? risk.risk.recommendationHi : risk.risk.recommendation}
               </p>
             </div>
+          ) : latestScan && (latestScan.treatment?.immediate?.length > 0 || latestScan.recommendations?.length > 0) ? (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle size={16} className="text-emerald-500" />
+                <span className="text-sm font-semibold text-foreground">
+                  Immediate Actions for {latestScan.disease}
+                </span>
+              </div>
+              <ul className="space-y-2">
+                {(latestScan.treatment?.immediate || latestScan.recommendations || []).slice(0, 3).map((rec, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50 mt-1.5 shrink-0" />
+                    <span>{rec}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link href={`/diagnosis/${latestScan._id}`} className="inline-block mt-2 text-xs text-emerald-500 hover:text-emerald-400 font-medium transition-colors">
+                View full treatment plan →
+              </Link>
+            </div>
           ) : (
-            <p className="text-sm text-muted-foreground">Monitor and follow treatment recommendation.</p>
+            <div className="flex flex-col items-center justify-center py-6 text-center">
+              <CheckCircle size={32} className="text-emerald-500/20 mb-3" />
+              <p className="text-sm font-medium text-foreground">No urgent actions required</p>
+              <p className="text-xs text-muted-foreground mt-1">Monitor crop health and scan if symptoms appear.</p>
+            </div>
           )}
         </div>
 
