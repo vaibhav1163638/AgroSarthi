@@ -496,13 +496,7 @@ response:`, locationResult);
         </div>
       </div>
 
-      {/* Demo notice */}
-      <div className="text-center py-4">
-        <span className="inline-flex items-center gap-2 text-xs text-muted-foreground bg-card px-4 py-2 rounded-full">
-          <Leaf size={12} />
-          Prototype Demo — SIH 2026 PS 131
-        </span>
-      </div>
+
     </div>
   );
 }

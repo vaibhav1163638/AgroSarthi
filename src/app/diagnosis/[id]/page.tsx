@@ -107,12 +107,7 @@ export default function DiagnosisPage() {
         <RiskBadge level={scan.riskLevel} />
       </div>
 
-      {/* Demo notice */}
-      {scan.isDemo && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-sm text-blue-400">
-          <Leaf size={16} /> This diagnosis was generated using prototype image analysis
-        </div>
-      )}
+
 
       {/* Disease Card */}
       <div className="p-6 rounded-2xl bg-card border border-border space-y-6">
