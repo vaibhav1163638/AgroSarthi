@@ -434,7 +434,7 @@ response:`, locationResult);
           {scans.length > 0 ? (
             <div className="space-y-3">
               {scans.slice(0, 3).reverse().map((scan, i) => (
-                <div key={scan._id} className="flex items-center gap-4 p-3 rounded-xl bg-card">
+                <Link key={scan._id} href={`/diagnosis/${scan._id}`} className="flex items-center gap-4 p-3 rounded-xl bg-card border border-transparent hover:border-emerald-500/30 transition-all card-hover block flex">
                   <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-sm font-bold text-primary">
                     {i + 1}
                   </div>
@@ -446,7 +446,7 @@ response:`, locationResult);
                     <p className="text-sm font-bold">{scan.severity}%</p>
                     <RiskBadge level={scan.riskLevel} />
                   </div>
-                </div>
+                </Link>
               ))}
               {scans.length >= 2 && (
                 <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">

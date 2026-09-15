@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageProvider';
 import { api, type TimelineData } from '@/lib/api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
@@ -139,7 +140,7 @@ export default function TimelinePage() {
                   }`}>
                     {scan.scanNumber || i + 1}
                   </div>
-                  <div className="flex-1 p-4 rounded-xl bg-card border border-border">
+                  <Link href={`/diagnosis/${scan._id}`} className="flex-1 p-4 rounded-xl bg-card border border-border hover:border-emerald-500/30 transition-all card-hover block">
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <p className="font-semibold">{scan.disease}</p>
@@ -181,7 +182,7 @@ export default function TimelinePage() {
                         }
                       </div>
                     )}
-                  </div>
+                  </Link>
                 </div>
 
                 {/* Treatment marker between worsening and improving */}
