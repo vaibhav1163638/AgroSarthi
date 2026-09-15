@@ -12,22 +12,25 @@ import {
 // Demo images with deterministic results
 const DEMO_IMAGES = [
   {
-    name: 'Tomato Early Blight',
-    nameHi: 'टमाटर अर्ली ब्लाइट',
-    description: 'Brown spots with concentric rings on leaves',
+    name: 'Bacterial Leaf Blight',
+    nameHi: 'बैक्टीरियल लीफ ब्लाइट',
+    description: 'Water-soaked, yellow to brown spots on leaves',
     color: '#d97706',
+    image: '/images/100023.jpg',
   },
   {
-    name: 'Healthy Tomato Plant',
-    nameHi: 'स्वस्थ टमाटर का पौधा',
-    description: 'Vibrant green foliage, no disease signs',
+    name: 'Normal Rice',
+    nameHi: 'सामान्य चावल',
+    description: 'Healthy green leaves, no disease signs',
     color: '#10b981',
+    image: '/images/100007.jpg',
   },
   {
-    name: 'Powdery Mildew',
-    nameHi: 'पाउडरी मिल्ड्यू',
-    description: 'White powdery patches on leaf surfaces',
+    name: 'Dead Heart',
+    nameHi: 'डेड हार्ट',
+    description: 'Drying of the central shoot',
     color: '#8b5cf6',
+    image: '/images/100015.jpg',
   },
 ];
 
@@ -78,6 +81,19 @@ export default function ScanPage() {
   };
 
   const handleDemoImage = async (index: number) => {
+    const demo = DEMO_IMAGES[index];
+    if (demo.image) {
+      try {
+        const res = await fetch(demo.image);
+        const blob = await res.blob();
+        const file = new File([blob], `demo-${index + 1}.jpg`, { type: blob.type || 'image/jpeg' });
+        handleFileSelect(file);
+        return;
+      } catch (err) {
+        console.error("Failed to load demo image", err);
+      }
+    }
+
     // Create a demo image blob
     const canvas = document.createElement('canvas');
     canvas.width = 400;
@@ -86,7 +102,7 @@ export default function ScanPage() {
     if (ctx) {
       // Create a distinct pattern per demo image for deterministic hashing
       const colors = ['#8B4513', '#228B22', '#DDA0DD'];
-      ctx.fillStyle = colors[index];
+      ctx.fillStyle = colors[index] || '#888';
       ctx.fillRect(0, 0, 400, 400);
 
       // Add some patterns
@@ -243,8 +259,12 @@ export default function ScanPage() {
               onClick={() => handleDemoImage(i)}
               className="p-4 rounded-xl bg-card border border-border hover:border-emerald-500/30 transition-all text-left card-hover"
             >
-              <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center" style={{ background: `${img.color}22` }}>
-                <ImageIcon size={32} style={{ color: img.color }} />
+              <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center overflow-hidden" style={{ background: `${img.color}22` }}>
+                {img.image ? (
+                  <img src={img.image} alt={img.name} className="w-full h-full object-cover" />
+                ) : (
+                  <ImageIcon size={32} style={{ color: img.color }} />
+                )}
               </div>
               <p className="text-sm font-medium">{language === 'hi' ? img.nameHi : img.name}</p>
               <p className="text-xs text-muted-foreground mt-1">{img.description}</p>
